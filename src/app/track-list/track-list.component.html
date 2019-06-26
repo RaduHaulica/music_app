@@ -1,0 +1,11 @@
+<div class="main-container">
+  <h2>Track list</h2>
+  <input #filterInput type='text' placeholder='search for bands and songs' (input)="search(filterInput.value)" (keydown.enter)="search(filterInput.value)">
+  <button (click)="filterTracks(filterInput.value)">search</button>
+  <button (click)="clear()">{{tracks$.length}} clear</button>
+  <button (click)="getTracks()">reset</button>
+  <div>
+    <app-track *ngFor="let track of tracks$ | async" [track]="track">
+    </app-track>
+  </div>
+</div>

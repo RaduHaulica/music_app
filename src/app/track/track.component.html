@@ -1,0 +1,8 @@
+<div class="card text-white bg-dark">
+    <img src="" class="card-img-top">
+    <div class="card-header"><strong>{{track.track}}</strong> by <strong>{{track.band}}</strong></div>
+    <div class="card-body">
+        <div *ngIf="track.remix">{{track.remix}} remix</div>
+        <div *ngIf="track.tags.length > 0">{{track.tags}}</div>
+    </div>
+</div>

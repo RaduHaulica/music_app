@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'music';
+  title: string = 'music';
+  appTitle: string = 'Music filter';
+  valueToBePassed: string = 'some value over here';
 }

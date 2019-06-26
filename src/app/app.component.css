@@ -1,0 +1,7 @@
+.app-container {
+    background-color: rgb(31, 31, 31);
+    align-content: center;
+    min-height: 95%;
+    margin-left: 10%;
+    margin-right: 10%;
+}

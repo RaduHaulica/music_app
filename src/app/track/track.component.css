@@ -1,0 +1,14 @@
+.card {
+    width: 18rem;
+    min-height: 6rem;
+    display: inline-block;
+    vertical-align: top;
+    margin: 2px;
+    background-color: lightgray;
+}
+
+.tags {
+    border-top-color: white;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
