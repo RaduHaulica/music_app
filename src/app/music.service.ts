@@ -1,26 +1,86 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Track } from './track';
+import { TrackJSON } from './models/trackJSON';
 
 import { LoggerService } from './logger.service';
 
+import * as Config from './config/database';
+
+/**
+ * Class that feeds tracks to app.
+ * Uses hardcoded values if no DB connection can be established
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class MusicService {
 
-  tracks: Track[];
-  constructor(private loggerService: LoggerService) {
-    this.parseMusicRegexp();
+  tracks: TrackJSON[] = [];
+  baseURL: string = "http://localhost:3000";
+  databaseConnection: boolean = false;
+
+  constructor(private httpClient: HttpClient, private loggerService: LoggerService) {
+    this.testConnection().subscribe(
+      (data) => {
+        this.loggerService.add(data);
+        this.databaseConnection = true;
+      },
+      (error) => {
+        this.loggerService.add("error");
+        for (let i in error) {
+          this.loggerService.add(i + ": " + error[i]);
+        }
+        if (error.status !== 200) {
+          this.databaseConnection = false;
+        }
+        this.parseMusicRegexp();
+      }
+    );
+
   }
 
-  getTracks(): Observable<Track[]> {
-    return of(this.tracks);
+  testConnection(): Observable<string> {
+    const url = `${this.baseURL}/test`;
+    return this.httpClient.get(url, {responseType: 'text'});
   }
 
-  filterTracks(filter: string): Observable<Track[]> {
-    return of(this.tracks.filter(el => el.band.toLowerCase().includes(filter.toLowerCase()) || el.track.toLowerCase().includes(filter.toLowerCase())));
+  addTrack(track: TrackJSON) {
+    this.loggerService.add("Music service making add call");
+    const url = `${this.baseURL}/`;
+
+    return this.httpClient.post(url, track);
+  }
+  
+  getTracks(): Observable<TrackJSON[]> {
+    if (!this.databaseConnection) {
+      this.loggerService.add("Not connected to DB, using hardcoded values");
+      return of(this.tracks);
+    }
+    
+    this.loggerService.add("Connected to DB, loading values");
+    const url = `${this.baseURL}/`;
+    return this.httpClient.get<TrackJSON[]>(url);
+  }
+
+  filterTracks(filter: string): Observable<TrackJSON[]> {
+    if (!this.databaseConnection) {
+      this.loggerService.add("Filter: Not connected to DB, using hardcoded values");
+      return of(this.tracks.filter(el => el.band.toLowerCase().includes(filter.toLowerCase()) || el.track.toLowerCase().includes(filter.toLowerCase())));
+    }
+
+    this.loggerService.add("Filter: Connected to DB, loading values");
+    const url = `${this.baseURL}/filter`
+    
+    const params = new HttpParams()
+    .set('filter', filter);
+    const options = {
+      params: params
+    }
+
+    return this.httpClient.get<TrackJSON[]>(url, options);
   }
 
   /**
@@ -51,7 +111,13 @@ export class MusicService {
       json.band = trackRaw.split("-")[0].trim()
       json.track = trackRaw.split("-")[1].trim();
 
-      let newTrack = new Track(json.band, json.track, json.remix, json.tags);
+      // let newTrack = new Track(json.band, json.track, json.remix, json.tags);
+      let newTrack = {
+        band: json.band,
+        track: json.track,
+        remix: json.remix,
+        tags: json.tags
+      };
       // this.loggerService.add("new track: " + newTrack.getEntry("string"));
       this.tracks.push(newTrack);
 

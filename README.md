@@ -1,6 +1,6 @@
 # Music filter
 
-Takes a list of songs and enables filtering by track name, artist, genre etc.
+App that takes a list of songs and enables filtering by track name, artist, genre etc.
 
 The goal is to have a lists of nice songs to play at impromptu parties without having to burden your brain with actually remembering any songs of an appropriate genre.
 
@@ -8,12 +8,18 @@ End goal is to do it without having to manually manage youtube while still keepi
 
 ## Dev notes
 
-List is hardcoded for now, parsed into appropriate objects.
+Added backend (node, express, mongoDB).
 
-Filtering is now live on providing input.
+Added a lot of logging (frontend and backend) due to issues with HTTP requests. Everything works now. Still keeping logging until everything is up and running.
 
+Added test component for quickly trying things out.
+
+Database connection works, fallback on hardcoded values if no connection can be established.
+
+Filtering is live on providing input.
+
+TODO: load hardcoded data into DB
 TODO: Tags make filtering by genre easier.
-TODO: Database access layer
 TODO: Add new track
 TODO: Edit track
 TODO: Youtube

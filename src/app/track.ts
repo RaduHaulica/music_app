@@ -4,8 +4,8 @@ export class Track {
     }
 
     getEntry(format: string): Object | string {
-        switch (format) {
-            case "JSON": {
+        switch (format.toLowerCase()) {
+            case "json": {
                 let result = {band: '', track: '', remix: '', tags: []};
                 result.band = this.band;
                 result.track = this.track;
