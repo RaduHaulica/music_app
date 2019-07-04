@@ -12,16 +12,20 @@ Added backend (node, express, mongoDB).
 
 Added a lot of logging (frontend and backend) due to issues with HTTP requests. Everything works now. Still keeping logging until everything is up and running.
 
+Database connection works, tracks are imported from hardcoded values, fallback on hardcoded values if no connection can be established.
+
 Added test component for quickly trying things out.
 
-Database connection works, fallback on hardcoded values if no connection can be established.
+Deleting stuff works.
 
 Filtering is live on providing input.
 
-TODO: load hardcoded data into DB
 TODO: Tags make filtering by genre easier.
+
 TODO: Add new track
+
 TODO: Edit track
+
 TODO: Youtube
 
 ## Development server

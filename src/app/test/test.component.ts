@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
+import { MusicService } from '../music.service';
+
 import { TrackJSON } from '../models/trackJSON';
 
 import { LoggerService } from '../logger.service';
@@ -16,7 +19,7 @@ export class TestComponent implements OnInit {
 
   baseURL: string = "http://localhost:3000";
 
-  constructor(private httpClient: HttpClient, private loggerService: LoggerService) { }
+  constructor(private musicService: MusicService, private httpClient: HttpClient, private loggerService: LoggerService) { }
 
   ngOnInit() {
   }
@@ -54,6 +57,18 @@ export class TestComponent implements OnInit {
     }
 
     return this.httpClient.get<TrackJSON[]>(url, options);
+  }
+
+  loadMusic() {
+    this.musicService.loadMusicInDB();
+  }
+
+  deleteMusic() {
+    this.musicService.deleteTrack(<TrackJSON>{}).subscribe();
+  }
+
+  deleteMusicArray(track: TrackJSON) {
+    this.musicService.deleteTrack(track).subscribe();
   }
 
 }

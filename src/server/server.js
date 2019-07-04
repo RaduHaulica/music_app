@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
 
 /* setting up */
 
-mongoose.connect(config.database)
+mongoose.connect(config.database, {useNewUrlParser: true})
 .then(() => console.log("MongoDB connection established."))
 .catch(err => {console.log(err)});
 
@@ -33,11 +33,14 @@ app.get("/test", (req, res) =>{
     res.send("Server responded.");
 });
 
+/**
+ * getAllTracks
+ */
 app.get("/", (req, res) => {
     console.log("----------------------------------------");
     Track.getAllTracks((err, tracks) => {
         if (err) {
-            return next(err);
+            console.log("Error getting tracks");
         } else {
             console.log("request to / made");
             console.log(tracks);
@@ -46,13 +49,16 @@ app.get("/", (req, res) => {
     });
 });
 
+/**
+ * filter
+ */
 app.get("/filter", (req, res) => {
     console.log("----------------------------------------");
     console.log("Body: " + JSON.stringify(req.query));
     console.log("filtering: " + req.query.filter);
     Track.filter(req.query.filter, (err, tracks) => {
         if (err) {
-            return next(err);
+            console.log("Error filtering tracks");
         } else {
             console.log(`Found ${tracks.length} records.`)
             res.json(tracks);
@@ -60,6 +66,9 @@ app.get("/filter", (req, res) => {
     });
 });
 
+/**
+ * addTrack
+ */
 app.post("/", (req, res) => {
     console.log("----------------------------------------");
     console.log("Adding new track...");
@@ -73,8 +82,7 @@ app.post("/", (req, res) => {
     console.log("New track: " + newTrack);
     Track.addTrack(newTrack, (err, newTrack) => {
         if (err) {
-            console.log("Error encountered adding new track");
-            return next(err);
+            console.log("Error adding new track");
         } else {
             console.log("New track added!")
             res.json(newTrack);
@@ -82,4 +90,22 @@ app.post("/", (req, res) => {
     });
 });
 
-console.log(config.database);
+/**
+ * deleteAll
+ */
+
+/**
+ * delete
+ */
+app.delete("/:id", (req, res) => {
+    console.log("--------------------");
+    console.log("Deleting track (server): " + req.params.id);
+    Track.delete(req.params.id, (err, response) => {
+        if (err) {
+            console.log("Error deleting track :" + JSON.stringify(err));
+        } else {
+            console.log("Delete operation successful");
+            res.json(response);
+        }
+    });
+});

@@ -1,5 +1,5 @@
 export interface TrackJSON {
-    _id?: number;
+    _id?: string;
     band: string;
     track: string;
     remix: string;

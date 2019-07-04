@@ -39,5 +39,16 @@ module.exports.filter = (filter, callback) => {
     }
     const regex = `/${filter}/`;
     // Track.find({ $or : [ { band: { $regex: regex } }, { track: { $regex: regex } } ] }, callback);
-    Track.find({ $or: [ { track: { $regex: filter } }, { band: { $regex: filter } } ] }, callback);
+    Track.find({ $or: [ { track: { $regex: filter } }, { band: { $regex: filter } }, { remix: { $regex: filter } }, { tags: filter } ] }, callback);
+}
+
+module.exports.delete = (id, callback) => {
+        console.log("Deleting (model) :" + id + " - " + typeof(id));
+        if (id === "undefined") {
+            console.log("Deleting many");
+            Track.deleteMany({}, callback);
+        } else {
+            console.log("Deleting one");
+            Track.deleteOne({_id: id}, callback);
+        }
 }

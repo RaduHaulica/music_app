@@ -53,6 +53,15 @@ export class MusicService {
 
     return this.httpClient.post(url, track);
   }
+
+  deleteTrack(track: TrackJSON) {
+    this.loggerService.add("Music service delete call :" + JSON.stringify(track));
+    let url = `${this.baseURL}/${track._id}`;
+    this.loggerService.add("Delete :" + url);
+
+
+    return this.httpClient.delete(url);
+  }
   
   getTracks(): Observable<TrackJSON[]> {
     if (!this.databaseConnection) {
@@ -128,7 +137,7 @@ export class MusicService {
     }
   }
 
-  parseMusicRegexp() {
+  parseMusicRegexp(): void {
     this.tracks = [];
     let musicTracksRaw = this.getMusic();
     for (let trackRaw of musicTracksRaw.split('\n')) {
@@ -139,13 +148,31 @@ export class MusicService {
       json.band = groups[1].trim();
       json.track = groups[2].trim();
       json.remix = groups[3] === undefined?'':groups[3].trim();
-      json.tags = groups[4] === undefined?[]:groups[4].trim().split(",");
+      if (groups[4] === undefined) {
+        json.tags = [];
+      } else {
+        groups[4].trim();
+        let temp = groups[4].slice(1, groups[4].length-1);
+        json.tags = temp.split(",").map(x => x.trim());
+      }
   
-      let newTrack = new Track(json.band, json.track, json.remix, json.tags);
+      let newTrack = <TrackJSON>{};
+      newTrack.band = json.band;
+      newTrack.track = json.track;
+      newTrack.remix = json.remix;
+      newTrack.tags = json.tags;
   
       this.tracks.push(newTrack);
     }
 
+  }
+
+  /**
+   * only call once to initialize empty database
+   */
+  loadMusicInDB(): void {
+    this.parseMusicRegexp();
+    this.tracks.forEach(track => this.addTrack(track).subscribe())
   }
 
   /**

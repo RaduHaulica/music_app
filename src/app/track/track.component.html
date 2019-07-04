@@ -1,8 +1,25 @@
-<div class="card text-white bg-dark">
-    <img src="" class="card-img-top">
-    <div class="card-header"><strong>{{track.track}}</strong> by <strong>{{track.band}}</strong></div>
+<div class="card text-white bg-dark" *ngIf="exists">
+    <div style="float: right;">
+        <button class="btn" style="color: rgb(0, 157, 255);" (click)="edit()">edit</button>
+        <button class="btn" style="color: red;" (click)="delete()"><strong>x</strong></button>
+    </div>
+    <div class="card-header">
+        <strong>{{track.track}}</strong> by <strong>{{track.band}}</strong>
+    </div>
     <div class="card-body">
         <div *ngIf="track.remix">{{track.remix}} remix</div>
         <div *ngIf="track.tags.length > 0">{{track.tags}}</div>
+    </div>
+</div>
+
+<div class="modal fade" id="editTrackModal" tabindex="-1" role="dialog">
+    <div class="modal dialog modal-dialog-centered">
+        <div class="modal-header">
+            <h5 class="modal-title">Edit track</h5>
+            <button type="button" class="close" data-dismiss="modal">x</button>
+        </div>
+        <div class="modal-body">
+            Some crap here.
+        </div>
     </div>
 </div>

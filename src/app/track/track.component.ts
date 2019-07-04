@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Track } from '../track';
+import { TrackJSON } from '../models/trackJSON';
+
+import { MusicService } from '../music.service';
 
 @Component({
   selector: 'app-track',
@@ -9,11 +11,22 @@ import { Track } from '../track';
 })
 export class TrackComponent implements OnInit {
 
-  @Input('track') track: Track;
+  private exists: boolean = true;
+  private edited: boolean = false;
 
-  constructor() { }
+  @Input('track') track: TrackJSON;
+
+  constructor(private musicService: MusicService) { }
 
   ngOnInit() {
+  }
+
+  delete() {
+    this.musicService.deleteTrack(this.track).subscribe(result => this.exists = false);
+  }
+
+  edit() {
+    this.edited = true;
   }
 
 }
