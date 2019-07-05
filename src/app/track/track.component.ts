@@ -15,6 +15,7 @@ export class TrackComponent implements OnInit {
   private edited: boolean = false;
 
   @Input('track') track: TrackJSON;
+  @Input('modalId') modalId: TrackJSON;
 
   constructor(private musicService: MusicService) { }
 

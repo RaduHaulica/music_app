@@ -19,6 +19,8 @@ export class TestComponent implements OnInit {
 
   baseURL: string = "http://localhost:3000";
 
+  toggle: boolean = false;
+
   constructor(private musicService: MusicService, private httpClient: HttpClient, private loggerService: LoggerService) { }
 
   ngOnInit() {
@@ -69,6 +71,10 @@ export class TestComponent implements OnInit {
 
   deleteMusicArray(track: TrackJSON) {
     this.musicService.deleteTrack(track).subscribe();
+  }
+
+  toggleToggle() {
+    this.toggle = !this.toggle;
   }
 
 }

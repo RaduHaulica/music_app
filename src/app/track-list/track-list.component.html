@@ -7,7 +7,7 @@
   <button class="btn btn-dark" (click)="getTracks()">reset</button>
   <button class="btn btn-dark" (click)="addTrack()">Add a track</button> -->
   <div>
-    <app-track *ngFor="let track of tracks$ | async" [(track)]="track">
+    <app-track *ngFor="let track of tracks$ | async" [(track)]="track" [modalId]="track._id">
     </app-track>
   </div>
 </div>
