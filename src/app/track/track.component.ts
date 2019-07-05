@@ -4,6 +4,9 @@ import { TrackJSON } from '../models/trackJSON';
 
 import { MusicService } from '../music.service';
 
+
+
+
 @Component({
   selector: 'app-track',
   templateUrl: './track.component.html',
@@ -13,6 +16,7 @@ export class TrackComponent implements OnInit {
 
   private exists: boolean = true;
   private edited: boolean = false;
+  private modalIdName: string = "";
 
   @Input('track') track: TrackJSON;
   @Input('modalId') modalId: TrackJSON;
@@ -20,6 +24,7 @@ export class TrackComponent implements OnInit {
   constructor(private musicService: MusicService) { }
 
   ngOnInit() {
+    this.modalIdName = "#" + this.modalId;
   }
 
   delete() {
@@ -28,6 +33,7 @@ export class TrackComponent implements OnInit {
 
   edit() {
     this.edited = true;
+    $(this.modalIdName).modal('show');
   }
 
 }

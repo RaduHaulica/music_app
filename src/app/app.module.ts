@@ -11,6 +11,9 @@ import { MessagesComponent } from './messages/messages.component';
 import { SearchComponent } from './search/search.component';
 import { TestComponent } from './test/test.component';
 
+import * as bootstrap from 'bootstrap';
+import * as $ from 'jquery';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,12 +21,12 @@ import { TestComponent } from './test/test.component';
     TrackListComponent,
     MessagesComponent,
     SearchComponent,
-    TestComponent
+    TestComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

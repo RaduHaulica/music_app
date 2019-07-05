@@ -1,6 +1,6 @@
 <div class="card text-white bg-dark" *ngIf="exists">
     <div style="float: right;">
-        <button class="btn" style="color: rgb(0, 157, 255);" (click)="edit()" data-toggle="modal" [attr.data-target]='"#" + modalId'>edit</button>
+        <button class="btn" style="color: rgb(0, 157, 255);" (click)="edit()" data-toggle="modal" attr.data-target="#{{track._id}}">edit</button>
         <button class="btn" style="color: red;" (click)="delete()"><strong>x</strong></button>
     </div>
     <div class="card-header">
@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<div class="modal" id="{{modalId}}" tabindex="-1" role="dialog">
+<div class="modal" id="{{track._id}}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content bg-dark">
         <div class="modal-header">
