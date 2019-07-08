@@ -52,3 +52,8 @@ module.exports.delete = (id, callback) => {
             Track.deleteOne({_id: id}, callback);
         }
 }
+
+module.exports.update = (id, track, callback) => {
+    console.log("Updating (model) :" + id + " - " + JSON.stringify(track));
+    Track.findByIdAndUpdate(id, track, callback);
+}

@@ -25,24 +25,24 @@
         <div class="modal-body">
             <div class="form-group">
                 <label for="bandName">Band name:</label>
-                <input type="text" class="form-control" id="bandName" value="{{track.band}}">
+                <input type="text" class="form-control" id="bandName" [(ngModel)]="track.band">
             </div>
             <div class="form-group">
                 <label for="trackName">Track name:</label>
-                <input type="text" class="form-control" id="trackName" value="{{track.track}}">
+                <input type="text" class="form-control" id="trackName" [(ngModel)]="track.track">
             </div>
             <div class="form-group">
                 <label for="remix">Remix:</label>
-                <input type="text" class="form-control" id="remix" value="{{track.remix}}">
+                <input type="text" class="form-control" id="remix" [(ngModel)]="track.remix">
             </div>
             <div class="form-group">
                 <label for="tags">Tags:</label>
-                <input type="text" class="form-control" id="tags" value="{{track.tags}}">
+                <input type="text" class="form-control" id="tags" [(ngModel)]="track.tags">
             </div>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveTrack(track)">Save changes</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>

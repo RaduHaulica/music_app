@@ -36,4 +36,8 @@ export class TrackComponent implements OnInit {
     $(this.modalIdName).modal('show');
   }
 
+  saveTrack(track: TrackJSON) {
+    this.musicService.updateTrack(track).subscribe(result => this.track = track);
+  }
+
 }

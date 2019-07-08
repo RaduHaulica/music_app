@@ -91,11 +91,8 @@ app.post("/", (req, res) => {
 });
 
 /**
- * deleteAll
- */
-
-/**
- * delete
+ * delete track
+ * deletes all tracks on empty id
  */
 app.delete("/:id", (req, res) => {
     console.log("--------------------");
@@ -105,6 +102,23 @@ app.delete("/:id", (req, res) => {
             console.log("Error deleting track :" + JSON.stringify(err));
         } else {
             console.log("Delete operation successful");
+            res.json(response);
+        }
+    });
+});
+
+/**
+ * update track
+ */
+app.put("/:id", (req, res) => {
+    console.log("--------------------");
+    console.log("Updating track (server): " + req.params.id);
+    console.log("Request body: " + JSON.stringify(req.body));
+    Track.update(req.params.id, req.body, (err, response) => {
+        if (err) {
+            console.log("Error updating track :" + JSON.stringify(err));
+        } else {
+            console.log("Update operation successful.");
             res.json(response);
         }
     });

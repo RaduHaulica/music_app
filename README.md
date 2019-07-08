@@ -16,15 +16,13 @@ Database connection works, tracks are imported from hardcoded values, fallback o
 
 Added test component for quickly trying things out.
 
-Deleting stuff works.
+Deleting works. Editing (almost) works. TODO: tags array
 
 Filtering is live on providing input.
 
 TODO: Tags make filtering by genre easier.
 
 TODO: Add new track
-
-TODO: Edit track
 
 TODO: Youtube
 

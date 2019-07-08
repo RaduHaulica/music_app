@@ -54,6 +54,13 @@ export class MusicService {
     return this.httpClient.post(url, track);
   }
 
+  updateTrack(track: TrackJSON) {
+    this.loggerService.add("Music service update call");
+    const url = `${this.baseURL}/${track._id}`;
+
+    return this.httpClient.put(url, track);
+  }
+
   deleteTrack(track: TrackJSON) {
     this.loggerService.add("Music service delete call :" + JSON.stringify(track));
     let url = `${this.baseURL}/${track._id}`;
