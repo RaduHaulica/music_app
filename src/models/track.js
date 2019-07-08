@@ -37,9 +37,8 @@ module.exports.filter = (filter, callback) => {
         Track.find(callback);
         return;
     }
-    const regex = `/${filter}/`;
     // Track.find({ $or : [ { band: { $regex: regex } }, { track: { $regex: regex } } ] }, callback);
-    Track.find({ $or: [ { track: { $regex: filter } }, { band: { $regex: filter } }, { remix: { $regex: filter } }, { tags: filter } ] }, callback);
+    Track.find({ $or: [ { track: { $regex: filter, $options: "i" } }, { band: { $regex: filter, $options: "i" } }, { remix: { $regex: filter, $options: "i" } }, { tags: filter } ] }, callback);
 }
 
 module.exports.delete = (id, callback) => {

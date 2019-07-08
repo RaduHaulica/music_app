@@ -59,6 +59,7 @@ app.get("/filter", (req, res) => {
     Track.filter(req.query.filter, (err, tracks) => {
         if (err) {
             console.log("Error filtering tracks");
+            console.log(JSON.stringify(err));
         } else {
             console.log(`Found ${tracks.length} records.`)
             res.json(tracks);

@@ -18,7 +18,7 @@ Added test component for quickly trying things out.
 
 Deleting works. Editing (almost) works. TODO: tags array
 
-Filtering is live on providing input.
+Filtering is live on providing input (case insensitive).
 
 TODO: Tags make filtering by genre easier.
 
