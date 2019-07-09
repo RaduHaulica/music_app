@@ -10,21 +10,24 @@ End goal is to do it without having to manually manage youtube while still keepi
 
 Added backend (node, express, mongoDB).
 
-Added a lot of logging (frontend and backend) due to issues with HTTP requests. Everything works now. Still keeping logging until everything is up and running.
+`npm run start` => Runs `ng serve` and `node server.js` concurrently.
+
+Added a lot of logging (frontend and backend) due to issues with HTTP requests. Keeping logging until everything is up and running.
 
 Database connection works, tracks are imported from hardcoded values, fallback on hardcoded values if no connection can be established.
 
-Added test component for quickly trying things out.
+Added test component for quickly trying things out and for reseting the track list until all operations are working.
 
-Deleting works. Editing (almost) works. TODO: tags array
+**Operations**
+* Adding new tracks works.
+* Deleting tracks works.
+* Editing (almost) works. TODO: tags array
+* Filtering is live on providing input (case insensitive).
 
-Filtering is live on providing input (case insensitive).
+### TODOs
 
-TODO: Tags make filtering by genre easier.
-
-TODO: Add new track
-
-TODO: Youtube
+* The tags thingamajig is more difficult than initially thought.
+* Youtube integration
 
 ## Development server
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Observable, Subject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -18,6 +18,8 @@ import { LoggerService } from '../logger.service';
 export class TrackListComponent implements OnInit {
 
   tracks$: Observable<TrackJSON[]>;
+  newTrack: TrackJSON;
+  adding = false;
   private filterTerms = new Subject<string>();
 
   // push new search term into observable stream
@@ -35,6 +37,14 @@ export class TrackListComponent implements OnInit {
       switchMap((term: string) => this.filterTracks(term))
     );
     setTimeout(function(){this.search("");}.bind(this), 0);
+
+    this.newTrack = {
+      _id: "",
+      band: "",
+      track: "",
+      remix: "",
+      tags: []
+    };
   }
   
   public clear(): void {
@@ -44,9 +54,14 @@ export class TrackListComponent implements OnInit {
     this.musicService.getTracks().subscribe(tracks => this.tracks$ = of(tracks));
   }
   
-  private addTrack() {
+  private addTrackModal() {
     this.loggerService.add("Adding new track");
-    const newTrack = <TrackJSON>{band: "bandName", track: "trackName"};
+    this.adding = true;
+    $('#addTrackModal').modal('show');
+    // const newTrack = <TrackJSON>{band: "bandName", track: "trackName"};
+  }
+  
+  private addTrack(newTrack: TrackJSON) {
     this.musicService.addTrack(newTrack).subscribe(response => this.loggerService.add(JSON.stringify(response)));
   }
 
