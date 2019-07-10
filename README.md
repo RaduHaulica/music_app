@@ -6,9 +6,24 @@ The goal is to have a lists of nice songs to play at impromptu parties without h
 
 End goal is to do it without having to manually manage youtube while still keeping authoritarian control over what is played. No surprises. No unvetted or subversive tracks. Only party-approved bangers.
 
+## Architecture
+
+**Components**
+* `TrackComponent` - individual track badge - delete, edit
+* `TrackListComponent` - lists tracks - search, add
+* `TestComponent` - miscellaneous functionality tests and admin level controls
+
+**Services**
+* `MusicService` - handles data operations, database server connection
+* `LoggerService` - message list, handles app-level operation logging
+
+**DB server**
+* `server/server.js` - handles HTTP requests / routing
+* `model/track.js` - MongoDB model, JSON schemas, database API
+
 ## Dev notes
 
-Added backend (node, express, mongoDB).
+Added backend (node, express, mongoose - mongoDB).
 
 `npm run start` => Runs `ng serve` and `node server.js` concurrently.
 
