@@ -21,6 +21,8 @@ export class TestComponent implements OnInit {
 
   toggle: boolean = false;
 
+  tags: string[] = [];
+
   constructor(private musicService: MusicService, private httpClient: HttpClient, private loggerService: LoggerService) { }
 
   ngOnInit() {
@@ -75,6 +77,31 @@ export class TestComponent implements OnInit {
 
   toggleToggle() {
     this.toggle = !this.toggle;
+  }
+
+  keyPressed(value) {
+    if (value[value.length-1] === ',') {
+      let newTag = (<HTMLInputElement>document.getElementById("tagsInput")).value;
+      newTag = newTag.slice(0, newTag.length-1);
+      this.tags.push(newTag);
+      (<HTMLInputElement>document.getElementById("tagsInput")).value = '';
+      let tempInput = document.getElementById("tagsInput");
+      let tagInputContainer = document.getElementById("tagsInputGroup");
+      tagInputContainer.innerHTML = '';
+      for (let i of this.tags) {
+        let tempSpan = document.createElement("span");
+        tempSpan.classList.add("tag");
+        tempSpan.innerHTML = i;
+        let tempButton = document.createElement("button");
+        tempButton.classList.add("btn");
+        tempButton.classList.add("btn-warning");
+        tempButton.innerHTML = "X";
+        tempSpan.appendChild(tempButton);
+        tagInputContainer.appendChild(tempSpan);
+      }
+      tagInputContainer.appendChild(tempInput);
+      document.getElementById("tagsInput").focus();
+    }
   }
 
 }

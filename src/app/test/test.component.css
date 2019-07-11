@@ -3,3 +3,17 @@
     border-color: azure;
     border-width: 5px;
 }
+
+.tag-input {
+    display: flex;
+    overflow: hidden;
+}
+
+:host::ng-deep .tag {
+    background-color: aquamarine;
+    color: darkblue;
+    margin-right: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    float: left;
+}

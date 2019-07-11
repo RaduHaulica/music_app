@@ -11,6 +11,7 @@ End goal is to do it without having to manually manage youtube while still keepi
 **Components**
 * `TrackComponent` - individual track badge - delete, edit
 * `TrackListComponent` - lists tracks - search, add
+* `MessagesComponent` - lists logger messages
 * `TestComponent` - miscellaneous functionality tests and admin level controls
 
 **Services**
@@ -22,6 +23,8 @@ End goal is to do it without having to manually manage youtube while still keepi
 * `model/track.js` - MongoDB model, JSON schemas, database API
 
 ## Dev notes
+
+**Latest**: Added some preliminary tags work in TestComponent
 
 Added backend (node, express, mongoose - mongoDB).
 

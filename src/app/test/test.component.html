@@ -8,6 +8,11 @@
   <button class="btn btn-dark" data-toggle="modal" data-target="#modal">Toggle modal</button>
 </div>
 
+
+<div id="tagsInputGroup" style="padding-top: 0px !important" class="input-group form-control">
+  <input id="tagsInput" class="tag-input" (keyup)="keyPressed(tagInput.value)" placeholder="tags are separated by ','" #tagInput/>
+</div>
+
 <div *ngIf="toggle">asdf</div>
 
 <div class="modal" id="modal" tabindex="-1" role="dialog">
