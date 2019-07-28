@@ -94,8 +94,15 @@ export class TestComponent implements OnInit {
         tempSpan.innerHTML = i;
         let tempButton = document.createElement("button");
         tempButton.classList.add("btn");
-        tempButton.classList.add("btn-warning");
+        tempButton.classList.add("btn-dark");
+        tempButton.classList.add("btn-sm");
         tempButton.innerHTML = "X";
+        tempButton.addEventListener("click", (event)=>{
+          console.log(this.tags);
+          event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+          this.tags.splice(this.tags.indexOf(i), 1);
+          console.log(this.tags);
+        });
         tempSpan.appendChild(tempButton);
         tagInputContainer.appendChild(tempSpan);
       }

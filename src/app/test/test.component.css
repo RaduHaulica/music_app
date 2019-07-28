@@ -5,15 +5,23 @@
 }
 
 .tag-input {
+    border: 0;
+    margin-top: 2px;
     display: flex;
     overflow: hidden;
+    min-width: 800px;
 }
 
 :host::ng-deep .tag {
-    background-color: aquamarine;
-    color: darkblue;
+    background-color: lightgray;
+    color: black;
+    margin-top: 2px;
     margin-right: 2px;
     padding-left: 5px;
-    padding-right: 5px;
+    padding-top: 0px;
     float: left;
+}
+
+:host::ng-deep .tag .btn {
+    margin-left: 4px;
 }
