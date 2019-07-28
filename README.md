@@ -24,7 +24,7 @@ End goal is to do it without having to manually manage youtube while still keepi
 
 ## Dev notes
 
-**Latest**: Added some preliminary tags work in TestComponent
+**Latest**: Added full tags support to edit form. Loading and saving to DB.
 
 Added backend (node, express, mongoose - mongoDB).
 
@@ -37,15 +37,14 @@ Database connection works, tracks are imported from hardcoded values, fallback o
 Added test component for quickly trying things out and for reseting the track list until all operations are working.
 
 **Operations**
-* Adding new tracks works.
+* Adding new tracks works. TODO: tags array
 * Deleting tracks works.
-* Editing (almost) works. TODO: tags array
+* Editing works.
 * Filtering is live on providing input (case insensitive).
 
 ### TODOs
 
-* The tags thingamajig is more difficult than initially thought.
-* Youtube integration
+* Youtube integration - soon™
 
 ## Development server
 

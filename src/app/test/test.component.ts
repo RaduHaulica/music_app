@@ -21,11 +21,43 @@ export class TestComponent implements OnInit {
 
   toggle: boolean = false;
 
-  tags: string[] = [];
+  tags: string[] = ["tag1", "tag2", "tag3"];
 
   constructor(private musicService: MusicService, private httpClient: HttpClient, private loggerService: LoggerService) { }
 
   ngOnInit() {
+    if (this.tags.length > 0) {
+      this.populateInput();
+    }
+  }
+
+  /**
+   * this creates tag elements for the form input if there are any already existing tags
+   */
+  populateInput(): void {
+    (<HTMLInputElement>document.getElementById("tagsInput")).value = '';
+    let tempInput = document.getElementById("tagsInput");
+    let tagInputContainer = document.getElementById("tagsInputGroup");
+    tagInputContainer.innerHTML = '';
+    for (let i of this.tags) {
+      let tempSpan = document.createElement("span");
+      tempSpan.classList.add("tag");
+      tempSpan.innerHTML = i;
+      let tempButton = document.createElement("button");
+      tempButton.classList.add("btn");
+      tempButton.classList.add("btn-dark");
+      tempButton.classList.add("btn-sm");
+      tempButton.innerHTML = "X";
+      tempButton.addEventListener("click", (event)=>{
+        (<HTMLSpanElement>event.target).parentNode.parentNode.removeChild((<HTMLSpanElement>event.target).parentNode);
+        this.tags.splice(this.tags.indexOf(i), 1);
+      });
+      tempSpan.appendChild(tempButton);
+      tagInputContainer.appendChild(tempSpan);
+    }
+    tagInputContainer.appendChild(tempInput);
+    document.getElementById("tagsInput").focus();
+    return ;
   }
 
   addTrack(): void {
@@ -79,10 +111,23 @@ export class TestComponent implements OnInit {
     this.toggle = !this.toggle;
   }
 
+  /**
+   * this does a lot of work; tags and input are child nodes of div styled like a form input
+   * the actual input has no style to blend seamlessly into the background
+   *     - checks for "," character and pushes input value to tags array
+   *     - creates new HTML element for tag
+   *     - floats tags to the left, pushing input to the right
+   *     - sticks an event listener on the tag "X" button to delete the tag
+   */
   keyPressed(value) {
     if (value[value.length-1] === ',') {
       let newTag = (<HTMLInputElement>document.getElementById("tagsInput")).value;
       newTag = newTag.slice(0, newTag.length-1);
+      if (newTag.length === 0) {
+        (<HTMLInputElement>document.getElementById("tagsInput")).value = '';
+        document.getElementById("tagsInput").focus();
+        return;
+      }
       this.tags.push(newTag);
       (<HTMLInputElement>document.getElementById("tagsInput")).value = '';
       let tempInput = document.getElementById("tagsInput");
@@ -98,10 +143,8 @@ export class TestComponent implements OnInit {
         tempButton.classList.add("btn-sm");
         tempButton.innerHTML = "X";
         tempButton.addEventListener("click", (event)=>{
-          console.log(this.tags);
-          event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+          (<HTMLSpanElement>event.target).parentNode.parentNode.removeChild((<HTMLSpanElement>event.target).parentNode);
           this.tags.splice(this.tags.indexOf(i), 1);
-          console.log(this.tags);
         });
         tempSpan.appendChild(tempButton);
         tagInputContainer.appendChild(tempSpan);
