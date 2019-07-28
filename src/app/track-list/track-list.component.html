@@ -15,7 +15,7 @@
   </div>
   
   <div class="modal" id="addTrackModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content bg-dark">
         <div class="modal-header">
           <h5 class="modal-title">Add a new track</h5>
@@ -39,7 +39,9 @@
           </div>
           <div class="form-group">
             <label for="tags">Tags:</label>
-            <input type="text" class="form-control" id="tags">
+            <div id="tagsInputGroupAdd" style="padding-top: 0px !important" class="input-group form-control">
+              <input type="text" id="tagsInputAdd" class="tag-input" (keyup)="keyPressed(tagInput.value)" placeholder="tags are separated by ','" #tagInput/>
+            </div>
           </div>
         </div>
     

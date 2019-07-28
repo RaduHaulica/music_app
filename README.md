@@ -24,7 +24,9 @@ End goal is to do it without having to manually manage youtube while still keepi
 
 ## Dev notes
 
-**Latest**: Added full tags support to edit form. Loading and saving to DB.
+**Latest**: Added tags support to add new track form.
+
+Added full tags support to edit form. Loading and saving to DB.
 
 Added backend (node, express, mongoose - mongoDB).
 
@@ -37,9 +39,9 @@ Database connection works, tracks are imported from hardcoded values, fallback o
 Added test component for quickly trying things out and for reseting the track list until all operations are working.
 
 **Operations**
-* Adding new tracks works. TODO: tags array
+* Adding new tracks works.
 * Deleting tracks works.
-* Editing works.
+* Editing tracks works.
 * Filtering is live on providing input (case insensitive).
 
 ### TODOs

@@ -70,4 +70,47 @@ export class TrackListComponent implements OnInit {
     return this.musicService.filterTracks(filter);
   }
 
+    /**
+   * this does a lot of work; tags and input are child nodes of div styled like a form input
+   * the actual input has no style to blend seamlessly into the background
+   *     - checks for "," character and pushes input value to tags array
+   *     - creates new HTML element for tag
+   *     - floats tags to the left, pushing input to the right
+   *     - sticks an event listener on the tag "X" button to delete the tag
+   */
+  keyPressed(value) {
+    if (value[value.length-1] === ',') {
+      let newTag = (<HTMLInputElement>document.getElementById("tagsInputAdd")).value;
+      newTag = newTag.slice(0, newTag.length-1);
+      if (newTag.length === 0) {
+        (<HTMLInputElement>document.getElementById("tagsInputAdd")).value = '';
+        document.getElementById("tagsInputAdd").focus();
+        return;
+      }
+      this.newTrack.tags.push(newTag);
+      (<HTMLInputElement>document.getElementById("tagsInputAdd")).value = '';
+      let tempInput = document.getElementById("tagsInputAdd");
+      let tagInputContainer = document.getElementById("tagsInputGroupAdd");
+      tagInputContainer.innerHTML = '';
+      for (let i of this.newTrack.tags) {
+        let tempSpan = document.createElement("span");
+        tempSpan.classList.add("tag");
+        tempSpan.innerHTML = i;
+        let tempButton = document.createElement("button");
+        tempButton.classList.add("btn");
+        tempButton.classList.add("btn-dark");
+        tempButton.classList.add("btn-sm");
+        tempButton.innerHTML = "X";
+        tempButton.addEventListener("click", (event)=>{
+          (<HTMLSpanElement>event.target).parentNode.parentNode.removeChild((<HTMLSpanElement>event.target).parentNode);
+          this.newTrack.tags.splice(this.newTrack.tags.indexOf(i), 1);
+        });
+        tempSpan.appendChild(tempButton);
+        tagInputContainer.appendChild(tempSpan);
+      }
+      tagInputContainer.appendChild(tempInput);
+      document.getElementById("tagsInputAdd").focus();
+    }
+  }
+
 }
