@@ -19,7 +19,7 @@ import * as Config from './config/database';
 export class MusicService {
 
   tracks: TrackJSON[] = [];
-  baseURL: string = "http://localhost:3000";
+  baseURL: string = Config.music_server_base_url;
   databaseConnection: boolean = false;
 
   constructor(private httpClient: HttpClient, private loggerService: LoggerService) {

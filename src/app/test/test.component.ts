@@ -48,7 +48,7 @@ export class TestComponent implements OnInit {
       tempButton.classList.add("btn-dark");
       tempButton.classList.add("btn-sm");
       tempButton.innerHTML = "X";
-      tempButton.addEventListener("click", (event)=>{
+      tempButton.addEventListener("click", (event) => {
         (<HTMLSpanElement>event.target).parentNode.parentNode.removeChild((<HTMLSpanElement>event.target).parentNode);
         this.tags.splice(this.tags.indexOf(i), 1);
       });

@@ -13,6 +13,7 @@ import { TestComponent } from './test/test.component';
 
 import * as bootstrap from 'bootstrap';
 import * as $ from 'jquery';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import * as $ from 'jquery';
     MessagesComponent,
     SearchComponent,
     TestComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

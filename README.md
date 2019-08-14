@@ -1,5 +1,7 @@
 # Music filter
 
+![music app](./main-screenshot.png)
+
 App that takes a list of songs and enables filtering by track name, artist, genre etc.
 
 The goal is to have a lists of nice songs to play at impromptu parties without having to burden your brain with actually remembering any songs of an appropriate genre.
