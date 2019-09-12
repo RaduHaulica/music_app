@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { TrackComponent } from './track/track.component';
@@ -15,6 +16,10 @@ import * as bootstrap from 'bootstrap';
 import * as $ from 'jquery';
 import { LoginComponent } from './login/login.component';
 
+import { JwtInterceptor } from './helpers/jwt.interceptor';
+// import { FakeBackendInterceptor } from './helpers/fake.backend';
+import { AdminComponent } from './admin/admin.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,13 +29,18 @@ import { LoginComponent } from './login/login.component';
     SearchComponent,
     TestComponent,
     LoginComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
+    RouterModule.forRoot([])
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

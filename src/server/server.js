@@ -28,6 +28,21 @@ app.listen(port, () => {
 
 /* requests and routing */
 
+// =====
+// ===== authentication =====
+// =====
+
+// import route
+const authRoute = require('./routes/auth');
+const postRoute = require('./routes/posts');
+// Route Middleware
+app.use('/user', authRoute);
+app.use('/posts', postRoute);
+
+// =====
+// ===== data =====
+// =====
+
 app.get("/test", (req, res) =>{
     console.log("connection tested");
     res.send("Server responded.");
