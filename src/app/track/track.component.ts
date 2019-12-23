@@ -14,7 +14,7 @@ import { LoggerService } from '../logger.service';
 })
 export class TrackComponent implements OnInit {
 
-  private exists: boolean = true;
+  public exists: boolean = true;
   private edited: boolean = false;
   private modalIdName: string = "";
 
@@ -79,6 +79,8 @@ export class TrackComponent implements OnInit {
   }
 
   /**
+   * Live tags for input element
+   * 
    * this does a lot of work; tags and input are child nodes of div styled like a form input
    * the actual input has no style to blend seamlessly into the background
    *     - checks for "," character and pushes input value to tags array

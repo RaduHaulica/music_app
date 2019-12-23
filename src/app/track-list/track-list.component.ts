@@ -10,6 +10,8 @@ import { MusicService } from '../music.service';
 
 import { LoggerService } from '../logger.service';
 
+import { AuthenticationService } from '../authentication.service';
+
 @Component({
   selector: 'app-track-list',
   templateUrl: './track-list.component.html',
@@ -50,18 +52,19 @@ export class TrackListComponent implements OnInit {
   public clear(): void {
     this.tracks$ = of(<TrackJSON[]>[]);
   }
-  private getTracks() {
-    this.musicService.getTracks().subscribe(tracks => this.tracks$ = of(tracks));
-  }
+
+  // obsolete
+  // private getTracks() {
+  //   this.musicService.getTracks().subscribe(tracks => this.tracks$ = of(tracks));
+  // }
   
-  private addTrackModal() {
+  public addTrackModal() {
     this.loggerService.add("Adding new track");
     this.adding = true;
     $('#addTrackModal').modal('show');
-    // const newTrack = <TrackJSON>{band: "bandName", track: "trackName"};
   }
   
-  private addTrack(newTrack: TrackJSON) {
+  public addTrack(newTrack: TrackJSON) {
     this.musicService.addTrack(newTrack).subscribe(response => this.loggerService.add(JSON.stringify(response)));
   }
 
@@ -70,14 +73,27 @@ export class TrackListComponent implements OnInit {
     return this.musicService.filterTracks(filter);
   }
 
-    /**
-   * this does a lot of work; tags and input are child nodes of div styled like a form input
-   * the actual input has no style to blend seamlessly into the background
-   *     - checks for "," character and pushes input value to tags array
-   *     - creates new HTML element for tag
-   *     - floats tags to the left, pushing input to the right
-   *     - sticks an event listener on the tag "X" button to delete the tag
-   */
+  public copyDataToDb() {
+    this.loggerService.add("copyDataToDb() called");
+    this.musicService.filterTracks("").subscribe((data) => {
+      data.forEach((track) => {
+        this.musicService.addTrackToCloud(track).subscribe(
+          response => this.loggerService.add(JSON.stringify(response))
+        );
+      });
+    })
+  }
+
+  /**
+  * Live tags in input element
+  *   
+  * this does a lot of work; tags and input are child nodes of div styled like a form input
+  * the actual input has no style to blend seamlessly into the background
+  *     - checks for "," character and pushes input value to tags array
+  *     - creates new HTML element for tag
+  *     - floats tags to the left, pushing input to the right
+  *     - sticks an event listener on the tag "X" button to delete the tag
+  */
   keyPressed(value) {
     if (value[value.length-1] === ',') {
       let newTag = (<HTMLInputElement>document.getElementById("tagsInputAdd")).value;
@@ -111,6 +127,22 @@ export class TrackListComponent implements OnInit {
       tagInputContainer.appendChild(tempInput);
       document.getElementById("tagsInputAdd").focus();
     }
+  }
+
+  /**
+   * loadMusicToCloud
+   */
+  loadMusicToCloud() {
+    this.loggerService.add("Loading all tracks to cloud (fingers crossed)");
+    this.tracks$.subscribe(tracks => {
+      this.loggerService.add("Subscribed, looping tracks$:");
+      tracks.forEach(track => {
+        this.loggerService.add("Inside track: " + track.track);
+        this.musicService.addTrackToCloud(track).subscribe(response => {
+          this.loggerService.add(JSON.stringify(response))
+        })
+      })
+    });
   }
 
 }

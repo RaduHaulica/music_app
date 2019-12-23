@@ -1,21 +1,24 @@
 // making this single file for now
 // TODO: split after everything is working
 
+/* config */
+require('dotenv').config();
+
 /* modules */
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const Track = require('../models/track');
+const CloudTrack = require('../models/cloudTrack');
 
-const config = require('../app/config/database');
-const mongoose = require('mongoose');
+// const config = require('../app/config/database');
+// const mongoose = require('mongoose');
+
+const dbConnection = require('./dbConnection');
+const dbConn = new dbConnection("cloud");
 
 /* setting up */
-
-mongoose.connect(config.database, {useNewUrlParser: true})
-.then(() => console.log("MongoDB connection established."))
-.catch(err => {console.log(err)});
 
 const port = 3000;
 const app = express();
@@ -53,7 +56,7 @@ app.get("/test", (req, res) =>{
  */
 app.get("/", (req, res) => {
     console.log("----------------------------------------");
-    Track.getAllTracks((err, tracks) => {
+    dbConn.Track.getAllTracks((err, tracks) => {
         if (err) {
             console.log("Error getting tracks");
         } else {
@@ -71,7 +74,8 @@ app.get("/filter", (req, res) => {
     console.log("----------------------------------------");
     console.log("Body: " + JSON.stringify(req.query));
     console.log("filtering: " + req.query.filter);
-    Track.filter(req.query.filter, (err, tracks) => {
+    console.log(dbConn.connectionType);
+    dbConn.Track.filter(req.query.filter, (err, tracks) => {
         if (err) {
             console.log("Error filtering tracks");
             console.log(JSON.stringify(err));
@@ -104,6 +108,38 @@ app.post("/", (req, res) => {
             res.json(newTrack);
         }
     });
+});
+
+/**
+ * addTrackToCloud
+ */
+app.post("/cloud", (req, res) => {
+    console.log("----------------------------------------");
+    console.log("Adding new track... (cloud)");
+    console.log("Req :" + JSON.stringify(req.body));
+    const newTrack = new CloudTrack({
+        band: req.body.band,
+        track: req.body.track,
+        remix: req.body.remix,
+        tags: req.body.tags
+    });
+    console.log("New track: " + newTrack);
+    CloudTrack.addTrack(newTrack, (err, newTrack) => {
+        if (err) {
+            console.log("Error adding new track");
+        } else {
+            console.log("New track added!")
+            res.json(newTrack);
+        }
+    });
+});
+
+/**
+ * test cloud
+ */
+app.post("/cloudTest", (req, res) => {
+    console.log("----------------------------------------");
+    console.log("Testing cloud");
 });
 
 /**

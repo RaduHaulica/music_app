@@ -54,6 +54,13 @@ export class MusicService {
     return this.httpClient.post(url, track);
   }
 
+  addTrackToCloud(track: TrackJSON): Observable<Object> {
+    this.loggerService.add("Music service making cloud add call");
+    const url = `${this.baseURL}/cloud`;
+
+    return this.httpClient.post(url, track);
+  }
+
   updateTrack(track: TrackJSON) {
     this.loggerService.add("Music service update call");
     const url = `${this.baseURL}/${track._id}`;

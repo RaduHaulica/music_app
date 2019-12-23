@@ -1,4 +1,16 @@
+/* config */
+require('dotenv').config();
+
 const mongoose = require('mongoose');
+
+// let trackConnection = mongoose.createConnection(process.env.DB_LOCAL_HOSTNAME, {useNewUrlParser: true})
+// .then(() => {
+//     console.log("MongoDB connection established.")
+// })
+// .catch(err => {console.log(err)});
+
+// console.log("trackConnection");
+// console.log(trackConnection);
 
 // JSON schemas
 const TrackSchema = mongoose.Schema({
